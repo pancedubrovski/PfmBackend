@@ -20,6 +20,6 @@ namespace PmfBackend.Commands {
         [Name("mcc")]
         public string Mcc { get; set; }
         [Name("kind")]
-        public string Kind { get; set; }
+        public string Kind { get; set; } ="";
     }
 }

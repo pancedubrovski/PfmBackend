@@ -5,8 +5,10 @@ using System.IO;
 using System.Globalization;
 using CsvHelper;
 using System;
+using CsvHelper.Configuration.Attributes;
 using CsvHelper.Configuration;
 using System.Linq;
+
 
 namespace PmfBackend.Services {
     public class TransactionSerive : ITransactionService {
@@ -22,7 +24,23 @@ namespace PmfBackend.Services {
                  };
                  using (var reader = new StreamReader(file.OpenReadStream())){
                     using (var csv = new CsvReader(reader, config)){
+                        try {
+                        csv.Context.RegisterClassMap<TransactionMap>();
+                        
                         transactions = csv.GetRecords<CreateTransactionCommand>().ToList();
+                        } 
+                        catch(UnauthorizedAccessException e){
+                            throw new Exception(e.Message);
+                        }
+                        catch (FieldValidationException e){
+                            throw new Exception(e.Message);
+                        }
+                        catch (CsvHelperException e){
+                            throw new Exception(e.Message);
+                        }
+                        catch (Exception e){
+                            throw new Exception(e.Message);
+                        }
                     }
                  }
             }
