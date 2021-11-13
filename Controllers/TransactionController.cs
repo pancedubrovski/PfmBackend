@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using PmfBackend.Services;
 using PmfBackend.Commands;
+using System.Threading.Tasks;
+using PmfBackend.Models;
+
 
 
 namespace PmfBackend.Controllers {
@@ -28,12 +30,22 @@ namespace PmfBackend.Controllers {
 
         [HttpPost]
         [Route("import")]
-        public IActionResult ImportData(IFormFile file){
+        public async Task<IActionResult> ImportData(IFormFile file){
 
 
-            List<CreateTransactionCommand> transactions = _transactionService.createTransactions(file);
+            List<CreateTransactionCommand> transactions = await _transactionService.createTransactions(file);
             return Ok(transactions);
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> getTransaction([FromQuery(Name = "page")] int? page,[FromQuery(Name = "pageSize")] int? pageSize,[FromQuery(Name = "sortBy")] string sortBy,
+        [FromQuery(Name = "sortOrder")] SortOrder sortOrder,[FromQuery(Name = "start-date")] string startDate,[FromQuery(Name = "end-date")] string endDate,[FromQuery(Name = "kind")] string kind=null){
+            Console.WriteLine(startDate+"alo");
+            Console.WriteLine(endDate);
+            page ??= 1;
+            pageSize ??= 10;
+            var list = await _transactionService.GetTransactions(page.Value,pageSize.Value,sortBy,sortOrder,startDate,endDate,kind);
+            return Ok(list);
         }
     }
 }

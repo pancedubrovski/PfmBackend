@@ -12,13 +12,13 @@ namespace PmfBackend.Database {
         }
 
        public TransactionDbContext(DbContextOptions options) : base(options){
-        
+           
         }
 
        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     

@@ -1,5 +1,5 @@
 using CsvHelper.Configuration.Attributes;
-
+using System;
 namespace PmfBackend.Commands {
     public class CreateTransactionCommand {
         
@@ -18,7 +18,7 @@ namespace PmfBackend.Commands {
         [Name("currency")]
         public string Currency { get; set; }
         [Name("mcc")]
-        public string Mcc { get; set; }
+        public string Mcc { get; set; }="";
         [Name("kind")]
         public string Kind { get; set; } ="";
     }

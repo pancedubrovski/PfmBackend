@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Instructor\\PmfBackend\\PmfBackend.csproj": {}
+    "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Instructor\\PmfBackend\\PmfBackend.csproj": {
+    "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Instructor\\PmfBackend\\PmfBackend.csproj",
+        "projectUniqueName": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj",
         "projectName": "PmfBackend",
-        "projectPath": "C:\\Users\\Instructor\\PmfBackend\\PmfBackend.csproj",
-        "packagesPath": "C:\\Users\\Instructor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Instructor\\PmfBackend\\obj\\",
+        "projectPath": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj",
+        "packagesPath": "/Users/pancedubrovski/.nuget/packages/",
+        "outputPath": "/Users/pancedubrovski/Desktop/PmfBackend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Instructor\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/pancedubrovski/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -49,6 +49,10 @@
             "CsvHelper": {
               "target": "Package",
               "version": "[27.1.1, )"
+            },
+            "EntityFramework.Functions": {
+              "target": "Package",
+              "version": "[1.5.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -87,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
         }
       }
     }

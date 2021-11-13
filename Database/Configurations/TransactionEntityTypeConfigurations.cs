@@ -9,6 +9,7 @@ namespace PmfBackend.Database.Configurations {
             builder.ToTable("transactions");
             
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.BeneficiaryName);
             builder.Property(x => x.Date);
             builder.Property(x => x.Direction);

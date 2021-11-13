@@ -12,7 +12,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PmfBackend.Services;
 using Npgsql;
+using Microsoft.EntityFrameworkCore;
 using PmfBackend.Database;
+using PmfBackend.Database.Repositories;
+using AutoMapper;
+using PmfBackend.Mappings;
+using System.Text.Json;
+using System.Reflection;
+using System.Text.Json.Serialization;
+
 
 namespace PmfBackend
 {
@@ -30,17 +38,27 @@ namespace PmfBackend
         {
 
             services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                options.JsonSerializerOptions.IgnoreNullValues = true;
+            });
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PmfBackend", Version = "v1" });
             });
-          ///  services.AddDbContext<TransactionDbContext>(options =>
-           // {
-             //   options.UseNpgsql(CreateConnectionString());
-           // });
-            services.AddScoped<ITransactionService, TransactionSerive>();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-           //services.AddDBContext
+             services.AddDbContext<TransactionDbContext>(options =>
+            {
+                options.UseNpgsql(CreateConnectionString());
+            });
+            services.AddScoped<ITransactionReposoiry, TransactionsRespositroy>(); 
+            services.AddScoped<ITransactionService, TransactionSerive>();
+            services.AddScoped<ICategoryService, CategoryService>();
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +74,7 @@ namespace PmfBackend
             app.UseRouting();
 
             app.UseAuthorization();
-      //      InitializeDatabase(app, env);
+            InitializeDatabase(app, env);
 
             app.UseEndpoints(endpoints =>
             {
@@ -79,19 +97,25 @@ namespace PmfBackend
                 Host = host,
                 Port = int.Parse(port),
                 Database = database,
-                Pooling = true
+                Pooling = true,
+                Timeout=300,
+                CommandTimeout=300
             };
 
             return builder.ConnectionString;
         }
-   //      private void InitializeDatabase(IApplicationBuilder app, IWebHostEnvironment env)
-   //     {
-     //       if (env.IsDevelopment())
-       //     {
-         //       using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-           //     {
-               // }
-         //   }
-     //   }
+
+        private void InitializeDatabase(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+                {
+                   var context =  scope.ServiceProvider.GetRequiredService<TransactionDbContext>();
+                   context.Database.EnsureCreated();
+                   
+                }
+            }
+        }
     }
 }
