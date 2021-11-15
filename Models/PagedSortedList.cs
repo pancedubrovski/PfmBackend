@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 
-namespace PmfBackend.Models {
-     public class PagedSortedList<T>
+namespace PmfBackend.Models
+{
+    public class PagedSortedList<T>
     {
         public int Page { get; set; }
 
@@ -17,5 +18,4 @@ namespace PmfBackend.Models {
 
         public List<T> Items { get; set; }
     }
-
 }

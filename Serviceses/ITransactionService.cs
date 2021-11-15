@@ -11,5 +11,7 @@ namespace PmfBackend.Services {
 
         public Task<PagedSortedList<TransactionEntity>> GetTransactions(int page =1,int pageSize =10,string sortBy=null,
         SortOrder sortOrder = SortOrder.Asc,string startDate= null,string endDate=null,string kind=null);
+
+        public Task<TransactionEntity> SaveCateoryOnTransactin(string transactionId,CategorizeTransactionRequest catCode);
     }
 }

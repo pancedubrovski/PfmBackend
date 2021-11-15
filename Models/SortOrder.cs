@@ -1,8 +1,9 @@
 
 
 namespace PmfBackend.Models {
-    public enum SortOrder {
+   public enum SortOrder
+    {
         Asc,
-        Desc
+        Desc,
     }
 }

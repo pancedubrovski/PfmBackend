@@ -647,6 +647,15 @@
             "rid": "win"
           }
         }
+      },
+      "TinyCsvParser/2.6.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/TinyCsvParser.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/TinyCsvParser.dll": {}
+        }
       }
     }
   },
@@ -2002,6 +2011,21 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "TinyCsvParser/2.6.1": {
+      "sha512": "FfPoO7L6UDAZ6YRZ23C9wz8KoGllGl73AhvCuZCFnt66NFD6WQohLFwI7yavusXh3OTQcBbf6OdAJ2+7TP9n9Q==",
+      "type": "package",
+      "path": "tinycsvparser/2.6.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/TinyCsvParser.dll",
+        "lib/netstandard1.3/TinyCsvParser.dll",
+        "lib/netstandard2.0/TinyCsvParser.dll",
+        "lib/netstandard2.1/TinyCsvParser.dll",
+        "tinycsvparser.2.6.1.nupkg.sha512",
+        "tinycsvparser.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -2013,7 +2037,8 @@
       "Microsoft.EntityFrameworkCore >= 5.0.11",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.11",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 5.0.10",
-      "Swashbuckle.AspNetCore >= 5.6.3"
+      "Swashbuckle.AspNetCore >= 5.6.3",
+      "TinyCsvParser >= 2.6.1"
     ]
   },
   "packageFolders": {
@@ -2086,6 +2111,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[5.6.3, )"
+          },
+          "TinyCsvParser": {
+            "target": "Package",
+            "version": "[2.6.1, )"
           }
         },
         "imports": [

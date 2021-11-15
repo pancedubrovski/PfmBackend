@@ -17,13 +17,18 @@ using PmfBackend.Models;
 namespace PmfBackend.Services {
     public class CategoryService : ICategoryService {
 
-        List<CreateCategoryCommand> categories = new List<CreateCategoryCommand>();
+        
+      
+        private readonly IMapper _mapper;
+        private readonly ICategoryRepositroy _categoryRepository;
 
 
-        public CategoryService(){
-            
+        public CategoryService(IMapper mapper,ICategoryRepositroy categoryRepository){
+            _mapper = mapper;
+            _categoryRepository = categoryRepository;
         }
-        public List<CreateCategoryCommand> saveCategories(IFormFile file){
+        public async Task<List<CreateCategoryCommand>> saveCategories(IFormFile file){
+            List<CreateCategoryCommand> categories = new List<CreateCategoryCommand>();
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
                      NewLine = Environment.NewLine,
@@ -49,6 +54,17 @@ namespace PmfBackend.Services {
                         }
                     }
                 }
+                // var categoriesEnitiy =  _mapper.Map<List<CategoryEntity>>(categories);
+                List<CategoryEntity> categoriesEnitiy = new List<CategoryEntity>();
+                foreach(var c in categories){
+                    CategoryEntity entity = new CategoryEntity {
+                        Code = c.Code,
+                        ParentCode = c.ParentCode,
+                        Name = c.Name
+                    };
+                    categoriesEnitiy.Add(entity);
+                }
+                await _categoryRepository.saveCategories(categoriesEnitiy);
                 return categories;
         }
     }

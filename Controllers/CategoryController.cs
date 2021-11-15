@@ -30,12 +30,13 @@ namespace PmfBackend.Controllers{
 
         [HttpPost]
         [Route("import")]
-        public IActionResult ImportCategories(IFormFile file){
+        public async Task<IActionResult> ImportCategories(IFormFile file){
             if (!file.FileName.EndsWith(".csv")){
                 return NotFound();
             }
-            var categories = _categoryService.saveCategories(file);
+            var categories = await _categoryService.saveCategories(file);
             return Ok(categories);
         }
+        
     }   
 }

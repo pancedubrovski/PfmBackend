@@ -8,6 +8,7 @@ using PmfBackend.Services;
 using PmfBackend.Commands;
 using System.Threading.Tasks;
 using PmfBackend.Models;
+using PmfBackend.Models.Exceptions;
 
 
 
@@ -28,6 +29,8 @@ namespace PmfBackend.Controllers {
             _transactionService = transactionService;
         }
 
+          
+
         [HttpPost]
         [Route("import")]
         public async Task<IActionResult> ImportData(IFormFile file){
@@ -46,6 +49,17 @@ namespace PmfBackend.Controllers {
             pageSize ??= 10;
             var list = await _transactionService.GetTransactions(page.Value,pageSize.Value,sortBy,sortOrder,startDate,endDate,kind);
             return Ok(list);
+        }
+        [HttpPost]
+        [Route("{transcationId}/categorize")]
+        public async Task<IActionResult> CategorizeTransaction([FromRoute] string transcationId,[FromBody] CategorizeTransactionRequest catCode){
+            try {
+                await _transactionService.SaveCateoryOnTransactin(transcationId,catCode);
+
+            } catch (NotFoundTransactionException e){
+                return NotFound(e.Message);
+            }
+            return Ok(catCode.catCode);
         }
     }
 }

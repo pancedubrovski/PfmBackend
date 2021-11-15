@@ -18,5 +18,7 @@ namespace PmfBackend.Database.Entities {
         public string Mcc { get; set; }
        
         public string Kind { get; set; } 
+        public string CatCode { get; set; }
+        public CategoryEntity Category { get; set; }
     }
 }

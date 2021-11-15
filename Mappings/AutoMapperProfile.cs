@@ -14,7 +14,10 @@ namespace PmfBackend.Mappings {
             CreateMap<CreateTransactionCommand,TransactionEntity>()
             .ForMember(d => d.Date, opt =>  opt.MapFrom(x=> DateTime.ParseExact(converDateFromString(x.Date),"MM/dd/yyyy",null)));
             CreateMap<List<CreateTransactionCommand>, List<TransactionEntity>>();
-            CreateMap<PagedSortedList<TransactionEntity>, PagedSortedList<Transction>>();
+            CreateMap<PagedSortedList<TransactionEntity>, PagedSortedList<Transaction>>();
+
+
+            CreateMap<List<CreateCategoryCommand>, List<CategoryEntity>>();
 
 
         }

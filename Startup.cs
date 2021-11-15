@@ -53,10 +53,13 @@ namespace PmfBackend
              services.AddDbContext<TransactionDbContext>(options =>
             {
                 options.UseNpgsql(CreateConnectionString());
+                options.EnableSensitiveDataLogging();
             });
             services.AddScoped<ITransactionReposoiry, TransactionsRespositroy>(); 
             services.AddScoped<ITransactionService, TransactionSerive>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryRepositroy , CategoryRepository>();
+          
 
            
         }

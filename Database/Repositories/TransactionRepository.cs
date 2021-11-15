@@ -8,6 +8,9 @@ using PmfBackend.Models;
 using System.Linq;
 using Npgsql;
 using System.Data.Sql;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using PmfBackend.Models.Exceptions;
 
 namespace PmfBackend.Database.Repositories {
     public class TransactionsRespositroy : ITransactionReposoiry {
@@ -84,6 +87,22 @@ namespace PmfBackend.Database.Repositories {
                 TotalPages = totalPages == 0 ? 1 : totalPages,
                 Items = items,
             };
+        }
+
+        public async Task<TransactionEntity> SaveCategoryOnTransaction(string transactionId,CategorizeTransactionRequest request){
+            TransactionEntity transactionEntity = await _dbContext.Transactions.FirstOrDefaultAsync(t => t.Id == transactionId);
+            CategoryEntity categoryEntity = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Code == request.catCode);
+            if(transactionEntity == null){
+                throw new NotFoundTransactionException(System.Net.HttpStatusCode.NotFound,"transaction  not exist");
+            }
+            if(categoryEntity == null){
+                throw new NotFoundTransactionException(System.Net.HttpStatusCode.NotFound,"category not exist");
+            }
+            transactionEntity.CatCode = categoryEntity.Code;
+            transactionEntity.Category = categoryEntity;
+            _dbContext.Attach(transactionEntity).State = EntityState.Modified; 
+            await _dbContext.SaveChangesAsync();
+            return transactionEntity;
         }
          public string converDateFromString(string input){
            

@@ -6,6 +6,7 @@ namespace PmfBackend.Database {
     public class TransactionDbContext : DbContext {
 
         public DbSet<TransactionEntity> Transactions {get; set;}
+        public DbSet<CategoryEntity> Categories {get; set;}
 
         public TransactionDbContext() {
 
@@ -18,6 +19,13 @@ namespace PmfBackend.Database {
        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
+            modelBuilder.Entity<TransactionEntity>()
+                .HasOne(t=> t.Category)
+                .WithMany(c => c.Transactions).HasForeignKey(t=> t.CatCode);
+
+            modelBuilder.Entity<CategoryEntity>()
+                .HasOne(c=>c.Category);
             
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }

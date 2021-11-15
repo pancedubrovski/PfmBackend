@@ -90,5 +90,9 @@ namespace PmfBackend.Services {
             return list;
         }
 
+        public async Task<TransactionEntity> SaveCateoryOnTransactin(string transactionId,CategorizeTransactionRequest request){
+            return await _transactionReposoiry.SaveCategoryOnTransaction(transactionId,request);
+        }
+
     }
 }
