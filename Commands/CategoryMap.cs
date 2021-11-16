@@ -1,12 +1,12 @@
-using CsvHelper.Configuration;
+using TinyCsvParser.Mapping;
 
 namespace PmfBackend.Commands {
-    public class CategoryMap  : ClassMap<CreateCategoryCommand> {
+    public class CategoryMap  : CsvMapping<CreateCategoryCommand> {
 
-        public CategoryMap(){
-            Map(m => m.Code).Name("code");
-            Map(m => m.ParentCode).Name("parent-code");
-            Map(m=> m.Name).Name("name");
+        public CategoryMap(): base(){
+            MapProperty(0,c =>c.Code);
+            MapProperty(1,c=>c.ParentCode);
+            MapProperty(2,c=>c.Name);
         }   
     }
 }

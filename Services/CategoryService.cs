@@ -13,6 +13,7 @@ using AutoMapper;
 using PmfBackend.Database.Entities;
 using System.Threading.Tasks;
 using PmfBackend.Models;
+using TinyCsvParser;
 
 namespace PmfBackend.Services {
     public class CategoryService : ICategoryService {
@@ -29,42 +30,36 @@ namespace PmfBackend.Services {
         }
         public async Task<List<CreateCategoryCommand>> saveCategories(IFormFile file){
             List<CreateCategoryCommand> categories = new List<CreateCategoryCommand>();
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-                {
-                     NewLine = Environment.NewLine,
-                 };
-                 using (var reader = new StreamReader(file.OpenReadStream())){
-                    using (var csv = new CsvReader(reader, config)){
-                        try {
-                        csv.Context.RegisterClassMap<TransactionMap>();
-                        
-                        categories = csv.GetRecords<CreateCategoryCommand>().ToList();
-                        } 
-                        catch(UnauthorizedAccessException e){
-                            throw new Exception(e.Message);
-                        }
-                        catch (FieldValidationException e){
-                            throw new Exception(e.Message);
-                        }
-                        catch (CsvHelperException e){
-                            throw new Exception(e.Message);
-                        }
-                        catch (Exception e){
-                            throw new Exception(e.Message);
-                        }
-                    }
-                }
-                // var categoriesEnitiy =  _mapper.Map<List<CategoryEntity>>(categories);
-                List<CategoryEntity> categoriesEnitiy = new List<CategoryEntity>();
-                foreach(var c in categories){
-                    CategoryEntity entity = new CategoryEntity {
-                        Code = c.Code,
-                        ParentCode = c.ParentCode,
-                        Name = c.Name
-                    };
-                    categoriesEnitiy.Add(entity);
-                }
-                await _categoryRepository.saveCategories(categoriesEnitiy);
+            var reader = new StreamReader(file.OpenReadStream());
+            var parsedDataString = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+            CsvReaderOptions csvReaderOptions = new CsvReaderOptions(new[] { "\n" });
+            CsvParserOptions csvParserOptions = new CsvParserOptions(true, ',');
+
+            CategoryMap csvMapper = new CategoryMap();
+             CsvParser<CreateCategoryCommand> csvParser = new CsvParser<CreateCategoryCommand>(csvParserOptions, csvMapper);
+            var result = csvParser
+                         .ReadFromString(csvReaderOptions, parsedDataString)
+                         .ToList();
+            for (int i = 0; i < result.Count; i++){
+                CreateCategoryCommand c = new CreateCategoryCommand {
+                    Code = result[i].Result.Code,
+                    ParentCode = result[i].Result.ParentCode,
+                    Name = result[i].Result.Name
+                };
+                categories.Add(c);
+            }
+            
+            List<CategoryEntity> list = new List<CategoryEntity>();
+            foreach(var c in categories){
+                CategoryEntity entity = new CategoryEntity {
+                    Code = c.Code,
+                    ParentCode = c.ParentCode,
+                    Name = c.Name
+                };
+                list.Add(entity);
+            }
+                await _categoryRepository.saveCategories(list);
                 return categories;
         }
         public async Task<List<CategoryEntity>> GetCaetegories(string ParentCode=null){

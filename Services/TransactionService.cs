@@ -13,6 +13,9 @@ using AutoMapper;
 using PmfBackend.Database.Entities;
 using System.Threading.Tasks;
 using PmfBackend.Models;
+using TinyCsvParser;
+using TinyCsvParser.Mapping;
+
 
 
 
@@ -29,52 +32,39 @@ namespace PmfBackend.Services {
 
         public async Task<List<CreateTransactionCommand>> createTransactions(IFormFile file){
             List<CreateTransactionCommand> transactions = new List<CreateTransactionCommand>();
+            
 
-            if(file.FileName.EndsWith(".csv")){
-               
-                 var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-                 {
-                     NewLine = Environment.NewLine,
-                 };
-                 using (var reader = new StreamReader(file.OpenReadStream())){
-                    using (var csv = new CsvReader(reader, config)){
-                        try {
-                        csv.Context.RegisterClassMap<TransactionMap>();
-                        
-                        transactions = csv.GetRecords<CreateTransactionCommand>().ToList();
-                        } 
-                        catch(UnauthorizedAccessException e){
-                            throw new Exception(e.Message);
-                        }
-                        catch (FieldValidationException e){
-                            throw new Exception(e.Message);
-                        }
-                        catch (CsvHelperException e){
-                            throw new Exception(e.Message);
-                        }
-                        catch (Exception e){
-                            throw new Exception(e.Message);
-                        }
-                    }
-                 }
+             var reader = new StreamReader(file.OpenReadStream());
+            var parsedDataString = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+            CsvReaderOptions csvReaderOptions = new CsvReaderOptions(new[] { "\n" });
+            CsvParserOptions csvParserOptions = new CsvParserOptions(true, ',');
+
+            TransactionMap csvMapper = new TransactionMap();
+             CsvParser<CreateTransactionCommand> csvParser = new CsvParser<CreateTransactionCommand>(csvParserOptions, csvMapper);
+            var result = csvParser
+                         .ReadFromString(csvReaderOptions, parsedDataString)
+                         .ToList();
+            for (int i = 0; i < result.Count; i++)
+            {
+                CreateTransactionCommand dataForDb = new CreateTransactionCommand
+                {
+                    Id = result[i].Result.Id,
+                    BeneficiaryName = result[i].Result.BeneficiaryName,
+                    Date = result[i].Result.Date,
+                    Direction = result[i].Result.Direction,
+                    Amount = result[i].Result.Amount,
+                    Description = result[i].Result.Description,
+                    Currency = result[i].Result.Currency,
+                    Kind = result[i].Result.Kind,
+                    Mcc = result[i].Result.Mcc
+                };
+                transactions.Add(dataForDb);
             }
-            List<TransactionEntity> transactionEntities = new List<TransactionEntity>();
+             List<TransactionEntity> transactionEntities = new List<TransactionEntity>();
             foreach (var e in transactions) {
                 if (!string.IsNullOrEmpty(e.Id)){
-                    TransactionEntity transaction = _mapper.Map<TransactionEntity>(e);
-        
-                    // transaction = new TransactionEntity {
-                    //     Id = e.Id,
-                    //     Amount = e.Amount,
-                    //     BeneficiaryName = e.BeneficiaryName,
-                    //     Currency = e.Currency,
-                    //     Mcc = e.Mcc,
-                    //     Kind = e.Kind,
-                    //     Date = DateTime.Parse(e.Date),
-                    //     Description = e.Description,
-                    //     Direction = e.Direction
-                   // };
-        
+                    TransactionEntity transaction = _mapper.Map<TransactionEntity>(e);   
                 transactionEntities.Add(transaction);
                 }
             }

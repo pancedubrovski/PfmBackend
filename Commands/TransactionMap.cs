@@ -1,20 +1,24 @@
-using CsvHelper.Configuration;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System;
+using TinyCsvParser.Mapping;
+
 
 namespace PmfBackend.Commands {
-    public class TransactionMap  : ClassMap<CreateTransactionCommand> {
+    public class TransactionMap  : CsvMapping<CreateTransactionCommand> {
 
-        public TransactionMap(){
+        public TransactionMap() : base(){
 
-            Map(m => m.Id).Name("id");
-            Map(m => m.BeneficiaryName).Name("beneficiary-name");
-            Map(m=> m.Date).Name("date");
-            Map(m=>m.Direction).Name("direction");
-            Map(m=> m.Amount).Name("amount");
-            Map(m=>m.Description).Name("description");
-            Map(m=> m.Currency).Name("currency");
-            Map(m=>m.Mcc).Name("mcc");
-            Map(m=>m.Kind).Name("kind");
-      
+            MapProperty(0, m => m.Id);
+            MapProperty(1, m => m.BeneficiaryName);
+            MapProperty(2, m => m.Date);
+            MapProperty(3, m => m.Direction);
+            MapProperty(4, m => m.Amount);
+            MapProperty(5, m => m.Description);
+            MapProperty(6, m => m.Currency);
+            MapProperty(7, m => m.Mcc);
+            MapProperty(8, m => m.Kind);
 
         }
         

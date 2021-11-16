@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "/Users/pancedubrovski/.dotnet/store/|arch|/|tfm|",
-      "/Users/pancedubrovski/.nuget/packages"
+      "C:\\Users\\SasoBidat\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\SasoBidat\\.nuget\\packages"
     ]
   }
 }
