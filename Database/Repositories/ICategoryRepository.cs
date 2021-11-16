@@ -8,6 +8,9 @@ namespace PmfBackend.Database.Repositories {
         public Task<List<CategoryEntity>> saveCategories(List<CategoryEntity> categories);
 
         public Task<CategoryEntity> saveCategory(CategoryEntity category);
+
+        public Task<List<CategoryEntity>> GetCaetegories(string ParentCode);
+
     }   
   
 

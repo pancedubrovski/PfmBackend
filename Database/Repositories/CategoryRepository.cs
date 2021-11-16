@@ -73,6 +73,16 @@ namespace PmfBackend.Database.Repositories {
 
             return category;
         }
+        public async Task<List<CategoryEntity>> GetCaetegories(string ParentCode=null){
+             var query = _dbContext.Categories.AsQueryable();
+
+            if (ParentCode != null){
+                query = query.Where(a=> a.ParentCode == ParentCode);
+            }
+            
+            return await query.ToListAsync();
+        }
+
 
         
     }

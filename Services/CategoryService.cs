@@ -67,6 +67,11 @@ namespace PmfBackend.Services {
                 await _categoryRepository.saveCategories(categoriesEnitiy);
                 return categories;
         }
+        public async Task<List<CategoryEntity>> GetCaetegories(string ParentCode=null){
+            
+            return await _categoryRepository.GetCaetegories(ParentCode);
+        }   
+
     }
 }
 

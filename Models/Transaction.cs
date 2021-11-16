@@ -10,7 +10,7 @@ namespace PmfBackend.Models {
         
         public string Direction { get; set; }
         
-        public string Amount { get; set; } 
+        public double Amount { get; set; } 
        
         public string Description { get; set; }
         public string Currency { get; set; }

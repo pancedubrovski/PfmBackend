@@ -46,8 +46,8 @@ namespace PmfBackend.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<string>("Amount")
-                        .HasColumnType("text");
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("BeneficiaryName")
                         .HasColumnType("text");

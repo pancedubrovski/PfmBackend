@@ -10,8 +10,8 @@ using PmfBackend.Database;
 namespace PmfBackend.Migrations
 {
     [DbContext(typeof(TransactionDbContext))]
-    [Migration("20211114114016_newMigrations")]
-    partial class newMigrations
+    [Migration("20211115213609_AmountChange1")]
+    partial class AmountChange1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,8 +48,8 @@ namespace PmfBackend.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<string>("Amount")
-                        .HasColumnType("text");
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("BeneficiaryName")
                         .HasColumnType("text");

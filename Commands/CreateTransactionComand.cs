@@ -12,7 +12,7 @@ namespace PmfBackend.Commands {
         [Name("direction")]
         public string Direction { get; set; }
         [Name("amount")]
-        public string Amount { get; set; }
+        public double Amount { get; set; }
         [Name("description")]
         public string Description { get; set; }
         [Name("currency")]

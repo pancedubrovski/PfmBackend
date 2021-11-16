@@ -59,6 +59,8 @@ namespace PmfBackend
             services.AddScoped<ITransactionService, TransactionSerive>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryRepositroy , CategoryRepository>();
+            services.AddScoped<IAnalyticsService , AnalyticsService>();
+            services.AddScoped<IAnalyticsRepoository ,AnalyticsRepository>();
           
 
            

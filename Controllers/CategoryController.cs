@@ -37,6 +37,12 @@ namespace PmfBackend.Controllers{
             var categories = await _categoryService.saveCategories(file);
             return Ok(categories);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetCategoies([FromQuery(Name = "parent-id")] string ParentCode=null){
+
+            var categories = await _categoryService.GetCaetegories(ParentCode);
+            return Ok(categories);
+        }
         
     }   
 }
