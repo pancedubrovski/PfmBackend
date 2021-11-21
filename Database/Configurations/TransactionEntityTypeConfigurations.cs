@@ -15,7 +15,7 @@ namespace PmfBackend.Database.Configurations {
             builder.Property(x => x.Direction);
             builder.Property(x => x.Amount);
             builder.Property(x => x.Description);
-            builder.Property(x=> x.Currency);
+            builder.Property(x=> x.Currency).HasMaxLength(3).IsFixedLength<string>(true).IsRequired();;
             builder.Property(x => x.Mcc);
             builder.Property(x => x.Kind);
 

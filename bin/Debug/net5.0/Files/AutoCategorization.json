@@ -1,0 +1,11 @@
+{
+  "rules":  [
+                {
+                    "title": "",
+                    "catcode" : "4",
+                    "predication": "\"BeneficiaryName\" LIKE '%chevron%' OR \"BeneficiaryName\" LIKE '%shell%'"
+                }
+    ]    
+
+
+}

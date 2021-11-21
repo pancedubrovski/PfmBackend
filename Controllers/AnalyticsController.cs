@@ -28,8 +28,8 @@ namespace PmfBackend.Controllers {
 
         [HttpGet]
         public IActionResult GetAnalistic([FromQuery] string catCode,[FromQuery(Name = "start-date")] string startDate=null,
-        [FromQuery(Name = "end-date")] string endDate=null,[FromQuery] string direction=null){
-            List<AnalyticsModel> list= _analyticsService.AnalyticsByCategory(catCode,startDate,endDate,direction);
+        [FromQuery(Name = "end-date")] string endDate=null,[FromQuery] Direction? direction=null){
+            AnalyticsGroupModel list= _analyticsService.AnalyticsByCategory(catCode,startDate,endDate,direction);
             return Ok(list);
         }
         

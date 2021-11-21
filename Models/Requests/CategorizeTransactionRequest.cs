@@ -1,6 +1,6 @@
 
 
-namespace PmfBackend.Models {
+namespace PmfBackend.Models.Requests {
     
     public class CategorizeTransactionRequest {
 

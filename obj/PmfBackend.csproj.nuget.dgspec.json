@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SasoBidat\\source\\repos\\PmfBackend\\PmfBackend.csproj": {}
+    "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SasoBidat\\source\\repos\\PmfBackend\\PmfBackend.csproj": {
+    "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SasoBidat\\source\\repos\\PmfBackend\\PmfBackend.csproj",
+        "projectUniqueName": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj",
         "projectName": "PmfBackend",
-        "projectPath": "C:\\Users\\SasoBidat\\source\\repos\\PmfBackend\\PmfBackend.csproj",
-        "packagesPath": "C:\\Users\\SasoBidat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SasoBidat\\source\\repos\\PmfBackend\\obj\\",
+        "projectPath": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj",
+        "packagesPath": "/Users/pancedubrovski/.nuget/packages/",
+        "outputPath": "/Users/pancedubrovski/Desktop/PmfBackend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\SasoBidat\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/pancedubrovski/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -66,6 +64,10 @@
               "target": "Package",
               "version": "[5.0.11, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[5.0.10, )"
@@ -97,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
         }
       }
     }

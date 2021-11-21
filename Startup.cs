@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 
 
+
 namespace PmfBackend
 {
     public class Startup
@@ -37,7 +38,8 @@ namespace PmfBackend
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+           
+            
             services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));

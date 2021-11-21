@@ -2,11 +2,6 @@ using PmfBackend.Commands;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using System.Globalization;
-using CsvHelper;
-using System;
-using CsvHelper.Configuration.Attributes;
-using CsvHelper.Configuration;
 using System.Linq;
 using PmfBackend.Database.Repositories;
 using AutoMapper;
@@ -15,6 +10,8 @@ using System.Threading.Tasks;
 using PmfBackend.Models;
 using TinyCsvParser;
 using TinyCsvParser.Mapping;
+using PmfBackend.Models.Exceptions;
+using PmfBackend.Models.Requests;
 
 
 
@@ -45,9 +42,14 @@ namespace PmfBackend.Services {
             var result = csvParser
                          .ReadFromString(csvReaderOptions, parsedDataString)
                          .ToList();
+            ErrorList errorLists = new ErrorList();
             for (int i = 0; i < result.Count; i++)
             {
-                CreateTransactionCommand dataForDb = new CreateTransactionCommand
+                string mccValue = null;
+                if(!string.IsNullOrWhiteSpace(result[i].Result.Mcc)){
+                    mccValue = result[i].Result.Mcc;
+                }
+                CreateTransactionCommand transaction = new CreateTransactionCommand
                 {
                     Id = result[i].Result.Id,
                     BeneficiaryName = result[i].Result.BeneficiaryName,
@@ -57,9 +59,13 @@ namespace PmfBackend.Services {
                     Description = result[i].Result.Description,
                     Currency = result[i].Result.Currency,
                     Kind = result[i].Result.Kind,
-                    Mcc = result[i].Result.Mcc
+                    Mcc = mccValue
                 };
-                transactions.Add(dataForDb);
+                ErrorMessage error = ValidateTransaction(transaction);
+                if (error!= null){
+                    errorLists.errors.Add(error);
+                }
+                transactions.Add(transaction);
             }
              List<TransactionEntity> transactionEntities = new List<TransactionEntity>();
             foreach (var e in transactions) {
@@ -73,16 +79,59 @@ namespace PmfBackend.Services {
             await _transactionReposoiry.saveTransaction(transactionEntities);
             return transactions;
         }
-        public async Task<PagedSortedList<TransactionEntity>> GetTransactions(int page =1,int pageSize =10,string sortBy=null,
-        SortOrder sortOrder = SortOrder.Asc,string startDate= null,string endDate= null,string kind=null){
-            PagedSortedList<TransactionEntity> list = await _transactionReposoiry.GetTransactions(page,pageSize,sortBy,sortOrder,startDate,endDate,kind);
+        private ErrorMessage ValidateTransaction(CreateTransactionCommand transaction){
+            if(transaction.Currency.Length != 3){
+                return new ErrorMessage {
+                    tag = "Currency", 
+                    error= "Currency must be  3 length",
+                    message = "Currency must be  3 length"
+                };
+            }
+            return null;
+        }
+         public async Task<PagedSortedList<TransactionEntity>> GetTransactions(string startDate,string endDate,
+         Kind kind,string sortBy,int page =1,int pageSize =10,SortOrder sortOrder = SortOrder.Asc){
+            PagedSortedList<TransactionEntity> list = await _transactionReposoiry.GetTransactions(sortBy,startDate,endDate,kind,page,pageSize,sortOrder);
           
             return list;
         }
 
-        public async Task<TransactionEntity> SaveCateoryOnTransactin(string transactionId,CategorizeTransactionRequest request){
+        public async Task<ErrorMessage> SaveCateoryOnTransactin(string transactionId,CategorizeTransactionRequest request){
             return await _transactionReposoiry.SaveCategoryOnTransaction(transactionId,request);
         }
 
+        public async Task<ErrorMessage> SplitTransactinByCategory(string transactionId,SplitTransactionRequest request){
+            return await _transactionReposoiry.SplitTransactionByCategory(transactionId,request);
+        }
+
+        public async Task<List<MccEntity>> SaveMccCodes(IFormFile file){
+            List<MccEntity> mccEntities = new List<MccEntity>();
+            var reader = new StreamReader(file.OpenReadStream());
+            var parsedDataString = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+            CsvReaderOptions csvReaderOptions = new CsvReaderOptions(new[] { "\n" });
+            CsvParserOptions csvParserOptions = new CsvParserOptions(true, ',');
+
+            MccMap csvMapper = new MccMap();
+             CsvParser<CreateMccCommand> csvParser = new CsvParser<CreateMccCommand>(csvParserOptions, csvMapper);
+            var result = csvParser
+                         .ReadFromString(csvReaderOptions, parsedDataString)
+                         .ToList();
+            for (int i = 0; i < result.Count; i++)
+            {
+                MccEntity dataForDb = new MccEntity
+                {
+                   Code = result[i].Result.Code,
+                   MerchactType = result[i].Result.MerchactType
+                };
+                mccEntities.Add(dataForDb);
+            }
+            
+            return await _transactionReposoiry.SaveMccCodes(mccEntities);
+        }
+
+        public void AutoCategorize(){
+            _transactionReposoiry.AutoCategorize();
+        }
     }
 }

@@ -18,8 +18,8 @@ namespace PmfBackend.Commands {
       
         public string Currency { get; set; }
       
-        public string? Mcc { get; set; }="";
+        public string Mcc { get; set; } = null;
        
-        public string Kind { get; set; } ="";
+        public string Kind { get; set; }
     }
 }

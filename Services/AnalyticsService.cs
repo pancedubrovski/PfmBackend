@@ -11,8 +11,8 @@ namespace PmfBackend.Services {
             _analysticsRepository = analyticsRepoository;
         }
 
-         public List<AnalyticsModel> AnalyticsByCategory(string catCode,string startDate=null,string endDate=null,string direction=null){
-             List<AnalyticsModel> list = _analysticsRepository.AnalyticsByCategory(catCode,startDate,endDate,direction);
+         public AnalyticsGroupModel AnalyticsByCategory(string catCode,string startDate=null,string endDate=null,Direction? direction=null){
+            var list = _analysticsRepository.AnalyticsByCategory(catCode,startDate,endDate,direction);
             return list;
         }
 

@@ -25,7 +25,7 @@ namespace PmfBackend.Mappings {
            
            
             string[] dateString = input.Split('/');
-            Console.WriteLine(dateString.Length +" "+input);
+           
             if (dateString.Length != 3 ){
                 return dateString.ToString();
             }

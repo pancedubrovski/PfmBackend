@@ -58,9 +58,6 @@ namespace PmfBackend.Database.Repositories {
             }else {
                   
                 _dbContext.Entry(c).Property(p => p.Name).IsModified = true;
-                if (c.Code == "E"){
-                    Console.WriteLine("asd");
-                }
                 _dbContext.Update(c);
                 _dbContext.ChangeTracker.DetectChanges();
                 _dbContext.SaveChanges();

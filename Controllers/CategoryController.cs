@@ -8,6 +8,7 @@ using PmfBackend.Services;
 using PmfBackend.Commands;
 using System.Threading.Tasks;
 using PmfBackend.Models;
+using PmfBackend.Models.Exceptions;
 
 namespace PmfBackend.Controllers{
     
@@ -30,9 +31,16 @@ namespace PmfBackend.Controllers{
 
         [HttpPost]
         [Route("import")]
-        public async Task<IActionResult> ImportCategories(IFormFile file){
-            if (!file.FileName.EndsWith(".csv")){
-                return NotFound();
+        public async Task<IActionResult> ImportCategories(IFormFile file=null){
+           
+             
+            if (file == null){
+                var error = new ErrorMessage {
+                    tag = "Csv File",
+                    error = "Not found",
+                    message = "Csv file not found"
+                };
+                return BadRequest(error.ToString());
             }
             var categories = await _categoryService.saveCategories(file);
             return Ok(categories);
