@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PmfBackend.Database;
@@ -9,9 +10,10 @@ using PmfBackend.Database;
 namespace PmfBackend.Migrations
 {
     [DbContext(typeof(TransactionDbContext))]
-    partial class TransactionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211121140153_ChangeName")]
+    partial class ChangeName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,7 +93,7 @@ namespace PmfBackend.Migrations
 
                     b.Property<string>("BeneficiaryName")
                         .HasColumnType("text")
-                        .HasColumnName("beneficiaryname");
+                        .HasColumnName("beneficiary-name");
 
                     b.Property<string>("CatCode")
                         .HasColumnType("text")

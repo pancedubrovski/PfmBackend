@@ -20,6 +20,6 @@ namespace PmfBackend.Services {
 
         public Task<List<MccEntity>> SaveMccCodes(IFormFile file);
 
-        public void AutoCategorize();
+        public int AutoCategorize();
     }
 }

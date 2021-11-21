@@ -19,30 +19,30 @@ namespace PmfBackend.Database.Repositories {
         public AnalyticsGroupModel AnalyticsByCategory(string catCode,string startDate=null,string endDate=null,Direction? direction=null){
             
            
-            var commandSql = " select \"pom\".\"CatCode\",Sum(\"pom\".\"Amount\") as \"Amount\" ,Count(*) as \"Count\" " +
-            "from ( select \"Id\",\"CatCode\",\"Amount\",\"Date\",\"Direction\" " +
+            var commandSql = " select \"pom\".\"catcode\",Sum(\"pom\".\"amount\") as \"Amount\" ,Count(*) as \"Count\" " +
+            "from ( select \"id\",\"catcode\",\"amount\",\"date\",\"direction\" " +
 	        "from transactions " + 
-            "where  \"IsSplit\" = \'false\' " +
+            "where  \"issplit\" = \'false\' " +
             "union " + 
-            "select  \"TransactionId\", \"sp\".\"CatCode\", \"sp\".\"Amount\", \"tr\".\"Date\",\"tr\".\"Direction\" "+
+            "select  \"TransactionId\", \"sp\".\"CatCode\", \"sp\".\"Amount\", \"tr\".\"date\",\"tr\".\"direction\" "+
             "from \"splitTransactions\" sp join transactions  tr "+
-	        "on \"sp\".\"TransactionId\" = \"tr\".\"Id\") pom  where ";
+	        "on \"sp\".\"TransactionId\" = \"tr\".\"id\") pom  where ";
            
            
             
        
             if (startDate != null){
                DateTime s = Convert.ToDateTime(startDate);
-               commandSql += " \"Date\" > \'"+s+"\' and ";
+               commandSql += " \"date\" > \'"+s+"\' and ";
             }
             if (endDate != null){
 
                DateTime e=  Convert.ToDateTime(endDate);
-               commandSql += " \"Date\" < \'"+e+"\' and ";
+               commandSql += " \"date\" < \'"+e+"\' and ";
             }
             if (direction != null){
                int enumValue = (int)direction;
-               commandSql += " \"Direction\" = \'"+enumValue+"\' and ";
+               commandSql += " \"direction\" = \'"+enumValue+"\' and ";
             }
             string commandSqllTemp = null;
             if (catCode != null){
@@ -50,16 +50,16 @@ namespace PmfBackend.Database.Repositories {
                 
                 if(char.IsLetter(catCode[0])) {
                 commandSqllTemp = commandSql;    
-                 commandSql += " \"pom\".\"CatCode\" in (select \"Code\" from categories "+
+                 commandSql += " \"pom\".\"catcode\" in (select \"Code\" from categories "+
 						 "where \"ParentCode\" = \'"+catCode+"\') and " ;
-                commandSqllTemp += " \"pom\".\"CatCode\" = \'"+catCode+"\'  and 1=1 group by \"pom\".\"CatCode\"  ";
+                commandSqllTemp += " \"pom\".\"catcode\" = \'"+catCode+"\'  and 1=1 group by \"pom\".\"catcode\"  ";
                 }
                 else {
-                    commandSql += " \"pom\".\"CatCode\" = \'"+catCode+"\'  and ";
+                    commandSql += " \"pom\".\"catcode\" = \'"+catCode+"\'  and ";
                 }
             }
            
-             commandSql +=  " 1=1 group by \"pom\".\"CatCode\" ";
+             commandSql +=  " 1=1 group by \"pom\".\"catcode\" ";
              List<AnalyticsModel> list  = new List<AnalyticsModel>();
             if (commandSqllTemp != null){
                 list.AddRange(_dbContext.AnalyticsModels.FromSqlRaw(commandSqllTemp).ToList());

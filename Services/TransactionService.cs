@@ -130,8 +130,8 @@ namespace PmfBackend.Services {
             return await _transactionReposoiry.SaveMccCodes(mccEntities);
         }
 
-        public void AutoCategorize(){
-            _transactionReposoiry.AutoCategorize();
+        public int AutoCategorize(){
+           return  _transactionReposoiry.AutoCategorize();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace PmfBackend.Database.Repositories {
 
         public Task<List<MccEntity>> SaveMccCodes(List<MccEntity> mccEntities);
 
-        public void AutoCategorize();
+        public int AutoCategorize();
 
     }
 }

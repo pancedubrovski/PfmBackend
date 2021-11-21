@@ -95,8 +95,8 @@ namespace PmfBackend.Controllers {
         [HttpPost]
         [Route("auto-categorize")]
         public IActionResult AutoCategorize(){
-            _transactionService.AutoCategorize();
-            return Ok();
+            int num =_transactionService.AutoCategorize();
+            return Ok(num);
         }
     }
 }

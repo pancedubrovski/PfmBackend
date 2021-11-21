@@ -215,53 +215,22 @@ namespace PmfBackend.Database.Repositories {
             }
             return (dateString[0]+"/"+dateString[1]+"/"+dateString[2]);
         }
-        public void AutoCategorize(){
+        public int AutoCategorize(){
+            string commandSql="";
+            int numCategorize = 0;
             var all = ConfigurationManager.AppSettings;
             foreach(var k in all.AllKeys){
-                Console.WriteLine(k +" "+ all.Get(k));
-            }
-            
-            
-            List<TransactionEntity> transactions = _dbContext.Transactions.ToList();
-            Dictionary<string,string> MccMap = new Dictionary<string,string>();
-            MccMap.Add("8011","45");
-            MccMap.Add("5499","E");
-            MccMap.Add("5200","56");
-            MccMap.Add("7711","104");
-            MccMap.Add("6300","33");
-            MccMap.Add("5192","23");
-            MccMap.Add("5912","49");
-            MccMap.Add("7519","105");
-            MccMap.Add("5941","92");
-            MccMap.Add("5655","50");
-            MccMap.Add("9311","R");
-            Dictionary<string,string> dMap = new Dictionary<string,string>();
-            dMap.Add("Allowance","67");
-            dMap.Add("Book","88");
-            dMap.Add("Books","88");
-            dMap.Add("ATM","25");
-            dMap.Add("Baby","68");
-            dMap.Add("Onlie banking fee","26");
-            dMap.Add("Food delivery","E");
-            dMap.Add("Supermaket shopping","E");
-            dMap.Add("Mobile Phone Bill", "11");
-            dMap.Add("Internet bill","11");
-            dMap.Add("Parking fee","5");
-
-            foreach(var t in transactions){
-                if (t.Category == null && t.IsSplit == false){
-                    if(!string.IsNullOrWhiteSpace(t.Mcc) && MccMap.Keys.Contains(t.Mcc)){
-                        CategoryEntity categoryEntity = _dbContext.Categories.FirstOrDefault(c => c.Code == MccMap[t.Mcc]);
-                        t.Category = categoryEntity;   
-                        _dbContext.SaveChanges(); 
-                    }
-                    if(dMap.Keys.Contains(t.Description)){
-                        CategoryEntity categoryEntity = _dbContext.Categories.FirstOrDefault(c =>c.Code == dMap[t.Description]);
-                        t.Category = categoryEntity;
-                        _dbContext.SaveChanges();
-                    }
+                commandSql = "select * from transactions where issplit = \'false\' and catcode is null and "+all.Get(k);
+                List<TransactionEntity> transactionsList = (List<TransactionEntity>) _dbContext.Transactions.FromSqlRaw(commandSql).ToList(); 
+                numCategorize += transactionsList.Capacity;
+                foreach(var e in transactionsList){
+                    e.CatCode =  k;
                 }
+                _dbContext.SaveChanges();  
             }
+            return numCategorize;
+                 
+            
         }
     }
 }
