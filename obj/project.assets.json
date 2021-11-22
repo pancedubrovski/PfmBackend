@@ -2084,11 +2084,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj",
+      "projectUniqueName": "/Users/pancedubrovski/Desktop/PfmBackend/PmfBackend.csproj",
       "projectName": "PmfBackend",
-      "projectPath": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend.csproj",
+      "projectPath": "/Users/pancedubrovski/Desktop/PfmBackend/PmfBackend.csproj",
       "packagesPath": "/Users/pancedubrovski/.nuget/packages/",
-      "outputPath": "/Users/pancedubrovski/Desktop/PmfBackend/obj/",
+      "outputPath": "/Users/pancedubrovski/Desktop/PfmBackend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/pancedubrovski/.nuget/NuGet/NuGet.Config"

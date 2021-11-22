@@ -62,7 +62,7 @@ namespace PmfBackend.Services {
                     Mcc = mccValue
                 };
                 ErrorMessage error = ValidateTransaction(transaction);
-               
+               transactions.Add(transaction);
             }
              List<TransactionEntity> transactionEntities = new List<TransactionEntity>();
             foreach (var e in transactions) {
