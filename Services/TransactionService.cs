@@ -62,10 +62,7 @@ namespace PmfBackend.Services {
                     Mcc = mccValue
                 };
                 ErrorMessage error = ValidateTransaction(transaction);
-                if (error!= null){
-                    errorLists.errors.Add(error);
-                }
-                transactions.Add(transaction);
+               
             }
              List<TransactionEntity> transactionEntities = new List<TransactionEntity>();
             foreach (var e in transactions) {
@@ -90,7 +87,7 @@ namespace PmfBackend.Services {
             return null;
         }
          public async Task<PagedSortedList<TransactionEntity>> GetTransactions(string startDate,string endDate,
-         Kind kind,string sortBy,int page =1,int pageSize =10,SortOrder sortOrder = SortOrder.Asc){
+         string sortBy,Kind? kind=null,int page =1,int pageSize =10,SortOrder sortOrder = SortOrder.Asc){
             PagedSortedList<TransactionEntity> list = await _transactionReposoiry.GetTransactions(sortBy,startDate,endDate,kind,page,pageSize,sortOrder);
           
             return list;
@@ -100,8 +97,8 @@ namespace PmfBackend.Services {
             return await _transactionReposoiry.SaveCategoryOnTransaction(transactionId,request);
         }
 
-        public async Task<ErrorMessage> SplitTransactinByCategory(string transactionId,SplitTransactionRequest request){
-            return await _transactionReposoiry.SplitTransactionByCategory(transactionId,request);
+        public  ErrorMessage SplitTransactinByCategory(string transactionId,SplitTransactionRequest request){
+            return  _transactionReposoiry.SplitTransactionByCategory(transactionId,request);
         }
 
         public async Task<List<MccEntity>> SaveMccCodes(IFormFile file){

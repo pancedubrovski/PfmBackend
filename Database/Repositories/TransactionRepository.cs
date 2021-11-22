@@ -40,20 +40,20 @@ namespace PmfBackend.Database.Repositories {
             return transactionEntities;
         }
          public async Task<PagedSortedList<TransactionEntity>> GetTransactions(string sortBy,
-            string startDate,string endDate,Kind kind,int page =1,int pageSize =10,SortOrder sortOrder = SortOrder.Asc){
+            string startDate,string endDate,Kind? kind=null,int page =1,int pageSize =10,SortOrder sortOrder = SortOrder.Asc){
             var query = _dbContext.Transactions.AsQueryable();
            
             var list= await _dbContext.Transactions.ToListAsync();
             
            
-            query = query.Skip((page - 1) * pageSize).Take(pageSize);
            
-                DateTime s = DateTime.ParseExact(converDateFromString(startDate),"MM/dd/yyyy",null);
-                DateTime e = DateTime.ParseExact(converDateFromString(endDate),"MM/dd/yyyy",null);
-                query = query.Where(a => a.Date.Date > s && a.Date < e);
+                DateTime s = Convert.ToDateTime(startDate); 
+                DateTime e = Convert.ToDateTime(endDate); 
+                query = query.Where(a => a.Date.Date >= s && a.Date <= e);
             
-            
-            query = query.Where(a => a.Kind == kind);
+            if (kind != null){
+                query = query.Where(a => a.Kind == kind);
+            }
             
              var total = query.Count();
             var totalPages = (int)Math.Ceiling(total * 1.0 / pageSize);
@@ -75,7 +75,8 @@ namespace PmfBackend.Database.Repositories {
                 query = query.OrderBy(p => p.Id);
             }
            
-            
+           query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
            var items = (List<TransactionEntity>) query.Include(t => t.splits).Select(t => new TransactionEntity {
                 Id = t.Id,
                 BeneficiaryName = t.BeneficiaryName,
@@ -126,7 +127,7 @@ namespace PmfBackend.Database.Repositories {
             return null;
         }
 
-        public async Task<ErrorMessage> SplitTransactionByCategory(string transactionId,SplitTransactionRequest request){
+        public  ErrorMessage SplitTransactionByCategory(string transactionId,SplitTransactionRequest request){
 
            
             var transactions = _dbContext.SplitTransactionEntities.Where(t => EF.Property<string>(t, "TransactionId") == transactionId);

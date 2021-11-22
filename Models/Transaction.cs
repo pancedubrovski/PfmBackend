@@ -16,6 +16,7 @@ namespace PmfBackend.Models {
         public string Currency { get; set; }
         public string Mcc { get; set; }
        
-        public string Kind { get; set; } 
+        public string Kind { get; set; }  
+       
     }
 }

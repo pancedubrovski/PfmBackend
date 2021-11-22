@@ -11,12 +11,12 @@ namespace PmfBackend.Services {
     public interface ITransactionService  {
         public Task<List<CreateTransactionCommand>> createTransactions(IFormFile file);
 
-        public Task<PagedSortedList<TransactionEntity>> GetTransactions(string startDate,string endDate,Kind kind,string sortBy,int page =1,int pageSize =10,
+        public Task<PagedSortedList<TransactionEntity>> GetTransactions(string startDate,string endDate,string sortBy,Kind? kind=null,int page =1,int pageSize =10,
         SortOrder sortOrder = SortOrder.Asc);
 
         public Task<ErrorMessage> SaveCateoryOnTransactin(string transactionId,CategorizeTransactionRequest catCode);
 
-        public Task<ErrorMessage> SplitTransactinByCategory(string transactionId,SplitTransactionRequest request);
+        public ErrorMessage SplitTransactinByCategory(string transactionId,SplitTransactionRequest request);
 
         public Task<List<MccEntity>> SaveMccCodes(IFormFile file);
 

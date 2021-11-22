@@ -9,7 +9,7 @@ namespace PmfBackend.Database {
             if (string.IsNullOrEmpty(properyName)){
                 return source.OrderBy(defaultOrderingProperty);
             }
-            properyName = UpperFirst(properyName);
+            //properyName = UpperFirst(properyName);
 
             if (typeof(TSource).GetProperty(properyName) == null){
                 return source.OrderBy(defaultOrderingProperty);

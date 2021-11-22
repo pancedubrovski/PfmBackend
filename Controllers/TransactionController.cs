@@ -51,12 +51,12 @@ namespace PmfBackend.Controllers {
         }
         [HttpGet]
         public async Task<IActionResult> getTransaction([FromQuery(Name = "page")] int? page,[FromQuery(Name = "pageSize")] int? pageSize,[FromQuery(Name = "sortBy")] string sortBy,
-        [FromQuery(Name = "sortOrder")] SortOrder sortOrder,[FromQuery(Name = "start-date")] string startDate,[FromQuery(Name = "end-date")] string endDate,[FromQuery(Name = "kind")] Kind kind){
+        [FromQuery(Name = "sortOrder")] SortOrder sortOrder,[FromQuery(Name = "start-date")] string startDate,[FromQuery(Name = "end-date")] string endDate,[FromQuery(Name = "kind")] Kind? kind=null){
            
             
             page ??= 1;
             pageSize ??= 10;
-            var list = await _transactionService.GetTransactions(startDate,endDate,kind,sortBy,page.Value,pageSize.Value,sortOrder);
+            var list = await _transactionService.GetTransactions(startDate,endDate,sortBy,kind,page.Value,pageSize.Value,sortOrder);
 
             string json = JsonConvert.SerializeObject(list, Formatting.Indented, new JsonSerializerSettings
             {
@@ -71,12 +71,12 @@ namespace PmfBackend.Controllers {
             if(error!= null){
                 return BadRequest(error.ToString());
             }
-            return Ok("ransaction splitted");
+            return Ok("Transaction splitted");
         }
         [HttpPost]
         [Route("/transaction/{id}/split")]
-        public async Task<IActionResult> SplitTransactionByCategory([FromRoute] string id,[FromBody] SplitTransactionRequest requst){
-            var error = await _transactionService.SplitTransactinByCategory(id,requst);
+        public  IActionResult SplitTransactionByCategory([FromRoute] string id,[FromBody] SplitTransactionRequest requst){
+            var error = _transactionService.SplitTransactinByCategory(id,requst);
             if (error != null){
 
                 return BadRequest(error.ToString());

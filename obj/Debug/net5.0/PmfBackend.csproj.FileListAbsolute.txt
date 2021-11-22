@@ -146,6 +146,7 @@ C:/Users/SasoBidat/source/repos/PmfBackend/obj/Debug/net5.0/PmfBackend.genruntim
 /Users/pancedubrovski/Desktop/PmfBackend/obj/Debug/net5.0/staticwebassets/PmfBackend.StaticWebAssets.xml
 /Users/pancedubrovski/Desktop/PmfBackend/obj/Debug/net5.0/scopedcss/bundle/PmfBackend.styles.css
 /Users/pancedubrovski/Desktop/PmfBackend/obj/Debug/net5.0/PmfBackend.RazorTargetAssemblyInfo.cache
+/Users/pancedubrovski/Desktop/PmfBackend/obj/Debug/net5.0/PmfBackend.csproj.CopyComplete
 /Users/pancedubrovski/Desktop/PmfBackend/obj/Debug/net5.0/PmfBackend.dll
 /Users/pancedubrovski/Desktop/PmfBackend/obj/Debug/net5.0/ref/PmfBackend.dll
 /Users/pancedubrovski/Desktop/PmfBackend/obj/Debug/net5.0/PmfBackend.pdb
