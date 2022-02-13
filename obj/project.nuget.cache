@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EeVtwaPHBfPS+t/wGeTwbu6BzqxaJoh2sPvBtMvYg/gnd6k73JGfTx08S3WDLepr1pq+XC4CjalaFiBSIc5Q1Q==",
+  "dgSpecHash": "CFu082zpwF5P4kGLWOJbpZQO1ODdqh/Oe+ND6UoN7SjEK17bGZ8bRvRuR6oGA5Cy02ZzCMYrUnDWOO+SydtaKA==",
   "success": true,
-  "projectFilePath": "/Users/pancedubrovski/Desktop/PfmBackend/PmfBackend.csproj",
+  "projectFilePath": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend/PmfBackend.csproj",
   "expectedPackageFiles": [
     "/Users/pancedubrovski/.nuget/packages/automapper/10.1.1/automapper.10.1.1.nupkg.sha512",
     "/Users/pancedubrovski/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/8.1.1/automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

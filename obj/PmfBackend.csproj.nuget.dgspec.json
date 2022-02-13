@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/pancedubrovski/Desktop/PfmBackend/PmfBackend.csproj": {}
+    "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend/PmfBackend.csproj": {}
   },
   "projects": {
-    "/Users/pancedubrovski/Desktop/PfmBackend/PmfBackend.csproj": {
+    "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend/PmfBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/pancedubrovski/Desktop/PfmBackend/PmfBackend.csproj",
+        "projectUniqueName": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend/PmfBackend.csproj",
         "projectName": "PmfBackend",
-        "projectPath": "/Users/pancedubrovski/Desktop/PfmBackend/PmfBackend.csproj",
+        "projectPath": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend/PmfBackend.csproj",
         "packagesPath": "/Users/pancedubrovski/.nuget/packages/",
-        "outputPath": "/Users/pancedubrovski/Desktop/PfmBackend/obj/",
+        "outputPath": "/Users/pancedubrovski/Desktop/PmfBackend/PmfBackend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/pancedubrovski/.nuget/NuGet/NuGet.Config"
